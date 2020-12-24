@@ -12,32 +12,36 @@ struct ContentView: View {
     var body: some View {
         GridView(viewModel.cards) {
             card in
-            CardView(card: card, font: .largeTitle).onTapGesture {
+            CardView(card: card).onTapGesture {
                 viewModel.chooseCard(card: card)
             }
         }
         .foregroundColor(.orange)
-        .padding(2)
+        .padding()
     }
+    
 }
 
 struct CardView : View {
     static let aspectRatio: CGFloat = 1
     var card: MemoryGame<String>.Card
-    var font: Font
     var body: some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
-                RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3.0)
-                Text(card.content).font(font)
-            } else {
-                if !card.isMatched{
-                    RoundedRectangle(cornerRadius: 10.0).fill()
+        GeometryReader {
+            geometry in
+            ZStack {
+                if card.isFaceUp {
+                    RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
+                    RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3.0)
+                    Text(card.content)
+                } else {
+                    if !card.isMatched{
+                        RoundedRectangle(cornerRadius: 10.0).fill()
+                    }
                 }
-            }
-        }.aspectRatio(CardView.aspectRatio, contentMode: .fit)
-        .padding(5)
+            }.aspectRatio(CardView.aspectRatio, contentMode: .fit)
+            .padding(5)
+            .font(Font.system(size: 0.7 * min(geometry.size.width, geometry.size.height)))
+        }
     }
 }
 
