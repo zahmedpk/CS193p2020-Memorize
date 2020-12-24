@@ -60,12 +60,12 @@
 		3D4C0F8625907C6700189E07 /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
-				3D4C0F8725907C6700189E07 /* MemorizeApp.swift */,
-				3D4C0F972590AA3200189E07 /* MemoryGame.swift */,
-				3D252FE72594541500186AA9 /* GridLayout.swift */,
-				3D4C0F9A2590B00A00189E07 /* EmojiMemoryGame.swift */,
 				3D4C0F8925907C6700189E07 /* ContentView.swift */,
+				3D4C0F9A2590B00A00189E07 /* EmojiMemoryGame.swift */,
+				3D4C0F972590AA3200189E07 /* MemoryGame.swift */,
 				3D252FEA2594553800186AA9 /* GridView.swift */,
+				3D4C0F8725907C6700189E07 /* MemorizeApp.swift */,
+				3D252FE72594541500186AA9 /* GridLayout.swift */,
 				3D4C0F8B25907C6800189E07 /* Assets.xcassets */,
 				3D4C0F9025907C6800189E07 /* Info.plist */,
 				3D4C0F8D25907C6800189E07 /* Preview Content */,

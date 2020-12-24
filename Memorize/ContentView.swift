@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    var viewModel: EmojiMemoryGame
+    @ObservedObject var viewModel: EmojiMemoryGame
     var body: some View {
         GridView(viewModel.cards) {
             card in
-            CardView(card: card, font: .largeTitle)
+            CardView(card: card, font: .largeTitle).onTapGesture {
+                viewModel.chooseCard(card: card)
+            }
         }
         .foregroundColor(.orange)
+        .padding(2)
     }
 }
 
@@ -29,10 +32,12 @@ struct CardView : View {
                 RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3.0)
                 Text(card.content).font(font)
             } else {
-                RoundedRectangle(cornerRadius: 10.0).fill()
+                if !card.isMatched{
+                    RoundedRectangle(cornerRadius: 10.0).fill()
+                }
             }
         }.aspectRatio(CardView.aspectRatio, contentMode: .fit)
-        .padding()
+        .padding(5)
     }
 }
 
