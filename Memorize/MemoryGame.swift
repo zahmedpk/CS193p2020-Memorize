@@ -16,7 +16,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable{
         if card.isFaceUp || card.isMatched {
             return
         }
-        print("card chosen: \(card)")
         if let chosenIndex = cards.firstIndex(where: {$0.id == card.id }){
             //check how many cards are face up
             let faceUpCards = cards.filter { $0.isFaceUp }

@@ -12,21 +12,24 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame = EmojiMemoryGame.createModel()
     static var themes: [Theme] = {
         var themes = [Theme]()
-        themes.append(Theme(minNumberOfPairs: 4, maxNumberOfPairs: 5, emojis: ["🍏", "🍊", "🍇", "🍓", "🍒","🍑"], name: "Fruits", color: .red))
-        themes.append(Theme(minNumberOfPairs: 5, maxNumberOfPairs: 5, emojis: ["🍣","🍛","🍲","🍕","🍟"], name: "Food", color: .yellow))
-        themes.append(Theme(minNumberOfPairs: 4, maxNumberOfPairs: 5, emojis: ["🍆", "🥔","🧅","🍠","🥬"], name: "Vegetables", color: .green))
-        themes.append(Theme(minNumberOfPairs: 4, maxNumberOfPairs: 4, emojis: ["😡","🤬","🤯","😳"], name: "Faces", color: .pink))
-        themes.append(Theme(minNumberOfPairs: 4, maxNumberOfPairs: 5, emojis: ["🥎","🏐","🏀","🏏","🏸","🏓"], name: "Sports", color: .blue))
-        themes.append(Theme(minNumberOfPairs: 5, maxNumberOfPairs: 5, emojis: ["🚗","🚕","🚙","🚌","🚎"], name: "Vehicles", color: .gray))
+        themes.append(Theme(numberOfPairs: 6, emojis: ["🍏", "🍊", "🍇", "🍓", "🍒","🍑"], name: "Fruits", color: UIColor.red.rgb))
+        themes.append(Theme(numberOfPairs: 5, emojis: ["🍣","🍛","🍲","🍕","🍟"], name: "Food", color: UIColor.yellow.rgb))
+        themes.append(Theme(numberOfPairs: 5, emojis: ["🍆", "🥔","🧅","🍠","🥬"], name: "Vegetables", color: UIColor.green.rgb))
+        themes.append(Theme(numberOfPairs: 4, emojis: ["😡","🤬","🤯","😳"], name: "Faces", color: UIColor.systemPink.rgb))
+        themes.append(Theme(numberOfPairs: 6, emojis: ["🥎","🏐","🏀","🏏","🏸","🏓"], name: "Sports", color: UIColor.blue.rgb))
+        themes.append(Theme(numberOfPairs: 5, emojis: ["🚗","🚕","🚙","🚌","🚎"], name: "Vehicles", color: UIColor.gray.rgb))
         return themes
     }()
     static var currentTheme: Theme?
     static func createModel() -> MemoryGame<String> {
         let randomTheme = themes.randomElement()!
+        let jsonData = try! JSONEncoder().encode(randomTheme)
+        if let jsonString = jsonData.utf8 {
+            print("Chosen theme in json: \(jsonString)")
+        }
         currentTheme = randomTheme
         let emojis = randomTheme.emojis
-        let numberOfPairs = Int.random(in: randomTheme.minNumberOfPairs...randomTheme.maxNumberOfPairs)
-        return MemoryGame<String>(numberOfPairs: numberOfPairs) {
+        return MemoryGame<String>(numberOfPairs: randomTheme.numberOfPairs) {
             pairIndex in
             return emojis[pairIndex]
         }
@@ -57,13 +60,18 @@ class EmojiMemoryGame: ObservableObject {
     }
     var currentThemeColor: Color {
         let currentTheme = Self.currentTheme!
-        return currentTheme.color
+        return Color(currentTheme.color)
     }
-    struct Theme {
-        let minNumberOfPairs: Int
-        let maxNumberOfPairs: Int
+    struct Theme: Codable {
+        let numberOfPairs: Int
         let emojis: [String]
         let name: String
-        let color: Color
+        let color: UIColor.RGB
+    }
+}
+
+extension Data {
+    var utf8 : String? {
+        String(data: self, encoding: .utf8)
     }
 }
