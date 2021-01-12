@@ -13,7 +13,8 @@ struct ContentView: View {
         VStack{
             GridView(viewModel.cards) {
                 card in
-                CardView(card: card).onTapGesture {
+                CardView(card: card)
+                    .onTapGesture {
                     viewModel.chooseCard(card: card)
                 }
             }
