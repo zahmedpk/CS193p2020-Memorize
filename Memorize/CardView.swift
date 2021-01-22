@@ -23,9 +23,9 @@ struct CardView : View {
                         RoundedRectangle(cornerRadius: 10.0).fill()
                     }
                 }
-            }.aspectRatio(CardView.aspectRatio, contentMode: .fit)
-            .padding()
+            }
             .font(Font.system(size: 0.7 * min(geometry.size.width, geometry.size.height)))
+            .aspectRatio(CardView.aspectRatio, contentMode: .fit)
         }
     }
 }
