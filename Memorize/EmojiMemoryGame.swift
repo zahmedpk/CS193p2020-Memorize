@@ -16,7 +16,7 @@ class EmojiMemoryGame: ObservableObject {
         self.model = Self.createModel(from: theme)
     }
     static func createModel(from theme: Theme) -> MemoryGame<String> {
-        let emojis = theme.emojis
+        let emojis: [String] = Array(theme.emojis)
         return MemoryGame<String>(numberOfPairs: theme.numberOfPairs) {
             pairIndex in
             return emojis[pairIndex]

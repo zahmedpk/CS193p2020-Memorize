@@ -28,6 +28,7 @@ struct EmojiMemoryGameView: View {
                 
             }
         }
+        .navigationBarTitle(viewModel.currentThemeName)
     }
 }
 
