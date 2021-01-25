@@ -9,14 +9,14 @@ import SwiftUI
 
 struct Theme: Codable, Identifiable, CustomStringConvertible {
     var description: String {
-        return "\(name): \(emojis)"
+        return "\(name ?? "nil")"
     }
     
-    var id: UUID
-    var numberOfPairs: Int
-    var emojis: Set<String>
-    var name: String
-    var color: UIColor.RGB
+    var id = UUID()
+    var numberOfPairs: Int!
+    var emojis: Set<String>!
+    var name: String!
+    var color: UIColor.RGB!
     mutating func addEmojis(_ addedEmojis: [String]){
         for emoji in addedEmojis {
             emojis.insert(emoji)
@@ -48,4 +48,17 @@ struct Theme: Codable, Identifiable, CustomStringConvertible {
 
 extension Theme {
     static let MinimumPairsAllowed = 3
+    var json: Data? {
+        try? JSONEncoder().encode(self)
+    }
+    init?(data: Data?) {
+        if data != nil {
+            if let theme = try? JSONDecoder().decode(Theme.self, from: data!){
+                self = theme
+            }
+        }
+        else {
+            return nil
+        }
+    }
 }

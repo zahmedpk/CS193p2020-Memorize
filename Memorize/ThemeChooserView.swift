@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ThemeChooserView: View {
     @Environment(\.presentationMode) var presentation //added to fix intermittent behavior of Navigation Bar Buttons
-    @ObservedObject var themeStore: ThemeStore = ThemeStore()
+    @ObservedObject var themeStore: ThemeStore
     @State var editMode: EditMode = .inactive
     var body: some View {
         NavigationView {

@@ -11,7 +11,7 @@ import SwiftUI
 struct MemorizeApp: App {
     var body: some Scene {
         WindowGroup {
-            ThemeChooserView()
+            ThemeChooserView(themeStore: ThemeStore())
         }
     }
 }

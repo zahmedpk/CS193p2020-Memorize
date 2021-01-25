@@ -6,12 +6,22 @@
 //
 
 import SwiftUI
+import Combine
 
 class ThemeStore: ObservableObject {
+    
+    static let keyForThemesArray = "themes"
+    
     @Published var themes: [Theme]
+    var cancellable: AnyCancellable?
     init() {
-        if let arrayOfThemes = UserDefaults.standard.array(forKey: "themes") as? [Theme] {
-            self.themes = arrayOfThemes
+        if let arrayOfThemes = UserDefaults.standard.array(forKey: Self.keyForThemesArray) as? [Data] {
+            self.themes = []
+            for jsonData in arrayOfThemes {
+                if let theme = Theme(data: jsonData){
+                    self.themes.append(theme)
+                }
+            }
         } else {
             self.themes = []
             self.themes.append(Self.plants)
@@ -21,6 +31,15 @@ class ThemeStore: ObservableObject {
             self.themes.append(Self.vegetables)
             self.themes.append(Self.fruits)
             self.themes.append(Self.food)
+        }
+        cancellable = $themes.sink { (themes) in
+            var pList = [Data]()
+            for theme in themes {
+                if let json = theme.json {
+                    pList.append(json)
+                }
+            }
+            UserDefaults.standard.setValue(pList, forKey: Self.keyForThemesArray)
         }
     }
     
